@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'home.dart';
+import 'homePage/home.dart';
 
 void main() async{
   await Hive.initFlutter();
 
-  var box = Hive.openBox("customFunctions");
+  var box = Hive.openBox("myBox");
 
   runApp(const NfcApp());
 }

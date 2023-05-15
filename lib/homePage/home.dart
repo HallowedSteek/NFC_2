@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:nfc_2/customFunctions.dart';
-import 'package:nfc_2/templateFunctions.dart';
+import 'package:nfc_2/customFunctions/customFunctions.dart';
+import 'package:nfc_2/templateFunctions/templateFunctions.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
