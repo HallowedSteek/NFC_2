@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:nfc_2/data/database.dart';
 
 var buttonStyle = TextButton.styleFrom(
   foregroundColor: Colors.black,
@@ -23,24 +24,23 @@ class CustomFunctions extends StatefulWidget {
 }
 
 class _CustomFunctionsState extends State<CustomFunctions> {
-  List<TextButton> data = [];
-
+  CustomFunctionsData db= CustomFunctionsData();
   String text  = '';
   String numeFunctie = '';
-
   //reference data from box
-
   final _myBox = Hive.box("customFunctions");
+  @override
+  void initState() {
 
-  //add data to box
-  void writeData(){
-
+    //prima deschidere a aplicatiei
+    if (_myBox.get('functiCustom')==null){
+      db.createInitialData();
+    } else {
+      //incarca data deja existenta
+      db.loadData();
+    }
+    super.initState();
   }
-  //read data from box
-
-  //delete data from box
-
-
   @override
   Widget build(BuildContext context) {
 
@@ -62,12 +62,12 @@ class _CustomFunctionsState extends State<CustomFunctions> {
                   shrinkWrap: true,
                   padding: const EdgeInsets.only(left: 50, right: 50),
 
-                  itemCount: data.length,
+                  itemCount: db.data.length,
                   itemBuilder: (context, index) {
                     return Card(
                       color: HexColor("#009bb0"),
                       child: ListTile(
-                        title: data[index],
+                        title: db.data[index],
                         trailing: Container(
                           width: 100,
                           child: Row(
@@ -88,7 +88,7 @@ class _CustomFunctionsState extends State<CustomFunctions> {
                                               onPressed: (){
                                                   setState(() {
                                                         var newButton = TextButton(style: buttonStyle, onPressed: () {}, child:Text(text));
-                                                        data[index] = newButton;
+                                                        db.data[index] = newButton;
                                                         Navigator.pop(context);
                                                   });
                                             },
@@ -102,7 +102,7 @@ class _CustomFunctionsState extends State<CustomFunctions> {
                                   child: IconButton(
                                       onPressed: () {
                                         setState(() {
-                                          data.removeAt(index);
+                                          db.data.removeAt(index);
                                         });
                                       }, icon: const Icon(Icons.delete)))
                             ],
@@ -136,10 +136,9 @@ class _CustomFunctionsState extends State<CustomFunctions> {
                                   onPressed: (){
                                     setState(() {
                                       var newButton = TextButton(style: buttonStyle, onPressed: () {}, child:Text(numeFunctie));
-                                      data.add(newButton);
+                                      db.data.add(newButton);
                                       Navigator.pop(context);
                                     });
-                                    writeData();
                                   },
                                   shape: const StadiumBorder(),
                                   child: const Text("Add")

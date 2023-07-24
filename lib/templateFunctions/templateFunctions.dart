@@ -35,15 +35,15 @@ class _TemplateFunctionsState extends State<TemplateFunctions> {
             TextButton(
                 style: buttonStyle,
                 onPressed:(){},
-                child: Text("Template Func 2")),
-            TextButton(
-                style: buttonStyle,
-                onPressed:(){},
                 child: Text("Template Func 3")),
             TextButton(
                 style: buttonStyle,
                 onPressed:(){},
                 child: Text("Template Func 4")),
+            TextButton(
+                style: buttonStyle,
+                onPressed:(){},
+                child: Text("Template Func 5")),
           ],
         ),
 
