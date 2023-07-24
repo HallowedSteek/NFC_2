@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   String apropieTag = 'Apropie tag-ul';
 
   void _tagRead() {
+
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
       result.value = tag.data;
       NfcManager.instance.stopSession();
@@ -88,7 +89,18 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                   child: const Text('Custom Functions')),
-
+              TextButton(
+                  style: TextButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: HexColor("#009bb0")),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const TemplateFunctions(),
+                      ),
+                    );
+                  },
+                  child: const Text('Template Functions')),
               TextButton(
                   style: TextButton.styleFrom(
                       foregroundColor: Colors.black,
@@ -105,6 +117,7 @@ class _HomePageState extends State<HomePage> {
                       Text('Citire alt tag'),
                     ],
                   )),
+
 
             ],
           ),

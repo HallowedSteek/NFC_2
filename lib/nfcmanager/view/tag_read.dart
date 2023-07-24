@@ -98,13 +98,13 @@ class _TagInfo extends StatelessWidget {
     if (Platform.isAndroid) {
       tagWidgets.add(FormRow(
         title: Text('Identifier'),
-        subtitle: Text('${(
+        subtitle: Text((
           NfcA.from(tag)?.identifier ??
           NfcB.from(tag)?.identifier ??
           NfcF.from(tag)?.identifier ??
           NfcV.from(tag)?.identifier ??
           Uint8List(0)
-        ).toHexString()}'),
+        ).toHexString()),
       ));
       tagWidgets.add(FormRow(
         title: Text('Tech List'),

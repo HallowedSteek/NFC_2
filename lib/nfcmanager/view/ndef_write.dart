@@ -82,7 +82,7 @@ class NdefWritePage extends StatelessWidget {
                           onPressed: () => {
                             Navigator.push(context, MaterialPageRoute(
                               fullscreenDialog: true,
-                              builder: (context) => EditTextPage.withDependency("artbyte")))
+                              builder: (context) => EditTextPage.withDependency("url:https:www.facebook.com/ArtByte510/")))
                             }
                         ),
                         SimpleDialogOption(
