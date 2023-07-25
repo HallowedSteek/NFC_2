@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:nfc_2/templateFunctions/templateFunctions.dart';
 import 'package:nfc_2/customFunctions/customFunctions.dart';
 import 'package:nfc_manager/nfc_manager.dart';
+import 'package:http/http.dart' as http;
 
 import '../nfcmanager/view/app.dart';
 
@@ -21,13 +24,59 @@ class _HomePageState extends State<HomePage> {
   bool apasatButonDeCitire = false;
   String citireArtbyte = 'Citire Tag ArtByte';
   String apropieTag = 'Apropie tag-ul';
+  String identifier = '';
 
-  void _tagRead() {
+Future<String> verifyTag(String identifier) async {
+  var url = Uri.parse("https://nfc-backend-dsyy.onrender.com/checkNfc");
+
+  var response = await http.post(
+    url,
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'nfcId': identifier,
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    return response.body;
+  } else {
+    return "ERROARE";
+  }
+
+}
+
+  Future<void> addNewTag(String identifier) async {
+    var url = Uri.parse("https://nfc-backend-dsyy.onrender.com/addNfc");
+
+    // Await the http get response, then decode the json-formatted response.
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'nfcId': identifier,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print("adaugat cu succes");
+    } else {
+      print("greseala");
+    }
+
+  }
+
+  Future<void> _tagRead() async {
 
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
       result.value = tag.data;
+      identifier = tag.data['ndef']['identifier'].toString();
       NfcManager.instance.stopSession();
-      tagFound = !tagFound;
+      String raspuns = await verifyTag(identifier);
+      raspuns == 'true' ? tagFound=!tagFound : tagFound=tagFound;
       setState(() {
 
       });
@@ -49,9 +98,9 @@ class _HomePageState extends State<HomePage> {
                 foregroundColor: Colors.black,
                 backgroundColor: HexColor("#009bb0"),
               ),
-              onPressed: () {
+              onPressed: () async {
                 apasatButonDeCitire = true;
-                _tagRead();
+                await _tagRead();
                 setState(() {
 
                 });
