@@ -79,9 +79,7 @@ class NdefTemplateWritePage extends StatelessWidget {
                       children: [
                         SimpleDialogOption(
                             child: Text('SITE ARTBYTE'),
-                            onPressed: () => {
-                              EditTextPage.withDependency("url:https:www.facebook.com/ArtByte510/"),
-                            }
+                            onPressed: () => Navigator.pop(context, 'artbyte'),
                         ),
                         SimpleDialogOption(
                           child: Text('Text'),
@@ -103,6 +101,9 @@ class NdefTemplateWritePage extends StatelessWidget {
                     ),
                   );
                   switch (result) {
+                    case 'artbyte':
+                      
+                      break;
                     case 'text':
                       Navigator.push(context, MaterialPageRoute(
                         fullscreenDialog: true,
