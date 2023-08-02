@@ -2,12 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:nfc_2/templateFunctions/templateFunctions.dart';
 import 'package:nfc_2/customFunctions/customFunctions.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:http/http.dart' as http;
 
-import '../nfcmanager/view/app.dart';
+import '../nfcmanager/view/ndef_write.dart';
+import '../nfcmanager/view/ndef_write_templates.dart';
+import '../nfcmanager/view/tag_read.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -114,18 +115,36 @@ Future<String> verifyTag(String identifier) async {
             direction: Axis.vertical,
             children: [
               TextButton(
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: HexColor("#009bb0"),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => Home(),
-                      ),
-                    );
-                  },
-                  child: const Text('Go to menu')),
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  backgroundColor: HexColor("#009bb0"),
+                ),
+                onPressed: () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>  TagReadPage.withDependency(),
+                )),
+                child: const Text('Read Tag'),
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  backgroundColor: HexColor("#009bb0"),
+                ),
+                onPressed: () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => NdefTemplateWritePage.withDependency(),
+                )),
+                child: const Text('Template Functions'),
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  backgroundColor: HexColor("#009bb0"),
+                ),
+                onPressed: () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => NdefWritePage.withDependency(),
+                )),
+                child: const Text('Custom Functions'),
+              ),
+
               TextButton(
                   style: TextButton.styleFrom(
                       foregroundColor: Colors.black,
@@ -137,19 +156,7 @@ Future<String> verifyTag(String identifier) async {
                       ),
                     );
                   },
-                  child: const Text('Custom Functions')),
-              TextButton(
-                  style: TextButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: HexColor("#009bb0")),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const TemplateFunctions(),
-                      ),
-                    );
-                  },
-                  child: const Text('Template Functions')),
+                  child: const Text('Custom Functions Old')),
               TextButton(
                   style: TextButton.styleFrom(
                       foregroundColor: Colors.black,

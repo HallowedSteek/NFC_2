@@ -48,10 +48,10 @@ class NdefWriteModel with ChangeNotifier {
   }
 }
 
-class NdefWritePage extends StatelessWidget {
+class NdefTemplateWritePage extends StatelessWidget {
   static Widget withDependency() => ChangeNotifierProvider<NdefWriteModel>(
     create: (context) => NdefWriteModel(Provider.of(context, listen: false)),
-    child: NdefWritePage(),
+    child: NdefTemplateWritePage(),
   );
 
 
@@ -60,7 +60,7 @@ class NdefWritePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Custom Functions'),
+        title: Text('Template Functions'),
       ),
       body: StreamBuilder<Iterable<WriteRecord>>(
         stream: Provider.of<NdefWriteModel>(context, listen: false).subscribe(),
@@ -69,14 +69,20 @@ class NdefWritePage extends StatelessWidget {
           children: [
             FormSection(children: [
               FormRow(
-                title: Text('Add Functionality'),
+                title: Text('Choose template'),
                 trailing: Icon(Icons.chevron_right),
                 onTap: () async {
                   final result = await showDialog<String>(
                     context: context,
                     builder: (context) => SimpleDialog(
-                      title: Text('Functionality Types'),
+                      title: Text('Templates'),
                       children: [
+                        SimpleDialogOption(
+                            child: Text('SITE ARTBYTE'),
+                            onPressed: () => {
+                              EditTextPage.withDependency("url:https:www.facebook.com/ArtByte510/"),
+                            }
+                        ),
                         SimpleDialogOption(
                           child: Text('Text'),
                           onPressed: () => Navigator.pop(context, 'text'),
