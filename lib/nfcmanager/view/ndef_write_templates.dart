@@ -28,6 +28,7 @@ class NdefWriteModel with ChangeNotifier {
     return _repo.deleteWriteRecord(record);
   }
 
+
   Future<String?> handleTag(NfcTag tag, Iterable<WriteRecord> recordList) async {
     final tech = Ndef.from(tag);
 
@@ -55,7 +56,6 @@ class NdefTemplateWritePage extends StatelessWidget {
   );
 
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,10 +78,6 @@ class NdefTemplateWritePage extends StatelessWidget {
                       title: Text('Templates'),
                       children: [
                         SimpleDialogOption(
-                            child: Text('SITE ARTBYTE'),
-                            onPressed: () => Navigator.pop(context, 'artbyte'),
-                        ),
-                        SimpleDialogOption(
                           child: Text('Text'),
                           onPressed: () => Navigator.pop(context, 'text'),
                         ),
@@ -101,13 +97,10 @@ class NdefTemplateWritePage extends StatelessWidget {
                     ),
                   );
                   switch (result) {
-                    case 'artbyte':
-                      
-                      break;
                     case 'text':
                       Navigator.push(context, MaterialPageRoute(
                         fullscreenDialog: true,
-                        builder: (context) => EditTextPage.withDependency(""),
+                        builder: (context) => EditTextPage.withDependency(),
                       ));
                       break;
                     case 'uri':
@@ -159,7 +152,7 @@ class NdefTemplateWritePage extends StatelessWidget {
                 ),
                 children: List.generate(ss.data!.length, (i) {
                   final record = ss.data!.elementAt(i);
-                  return _WriteRecordFormRow(i, record);
+                  return WriteRecordFormRow(i, record);
                 }),
               ),
           ],
@@ -169,8 +162,8 @@ class NdefTemplateWritePage extends StatelessWidget {
   }
 }
 
-class _WriteRecordFormRow extends StatelessWidget {
-  _WriteRecordFormRow(this.index, this.record);
+class WriteRecordFormRow extends StatelessWidget {
+  WriteRecordFormRow(this.index, this.record);
 
   final int index;
 
@@ -266,7 +259,7 @@ class _WriteRecordFormRow extends StatelessWidget {
 
 final _editPageBuilders = Map<Type, Widget Function(WriteRecord)>.unmodifiable(
   <Type, Widget Function(WriteRecord)>{
-    WellknownTextRecord: (record) => EditTextPage.withDependency("",record),
+    WellknownTextRecord: (record) => EditTextPage.withDependency(record),
     WellknownUriRecord: (record) => EditUriPage.withDependency(record),
     MimeRecord: (record) => EditMimePage.withDependency(record),
     ExternalRecord: (record) => EditExternalPage.withDependency(record),

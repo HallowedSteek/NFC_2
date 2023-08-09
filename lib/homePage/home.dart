@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:nfc_2/customFunctions/customFunctions.dart';
+import 'package:nfc_2/nfcmanager/view/edit_uri.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:http/http.dart' as http;
 
@@ -93,7 +94,7 @@ Future<String> verifyTag(String identifier) async {
           title: const Text("NFC APP"),
           centerTitle: true,
         ), //bara de sus
-        body: !tagFound ? Center(
+        body: false ? Center(
           child: TextButton(
               style: TextButton.styleFrom(
                 foregroundColor: Colors.black,
@@ -130,7 +131,7 @@ Future<String> verifyTag(String identifier) async {
                   backgroundColor: HexColor("#009bb0"),
                 ),
                 onPressed: () => Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => NdefTemplateWritePage.withDependency(),
+                  builder: (context) => EditUriPage.withDependency(),
                 )),
                 child: const Text('Template Functions'),
               ),

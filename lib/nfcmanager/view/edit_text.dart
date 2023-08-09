@@ -7,13 +7,12 @@ import '../model/write_record.dart';
 import '../repository/repository.dart';
 
 class EditTextModel with ChangeNotifier {
-  EditTextModel(this._repo, this.old, this.url) {
+  EditTextModel(this._repo, this.old) {
     if (old == null) return;
     final record = WellknownTextRecord.fromNdef(old!.record);
     textController.text = record.text;
   }
 
-  final String url;
   final Repository _repo;
   final WriteRecord? old;
   final GlobalKey<FormState> formKey = GlobalKey();
@@ -25,7 +24,7 @@ class EditTextModel with ChangeNotifier {
 
     final record = WellknownTextRecord(
       languageCode: 'en', // todo:
-      text: url == "" ? textController.text : url,
+      text: textController.text,
     );
 
     return _repo.createOrUpdateWriteRecord(WriteRecord(
@@ -36,12 +35,10 @@ class EditTextModel with ChangeNotifier {
 }
 
 class EditTextPage extends StatelessWidget {
-  EditTextPage(String? url);
-  String? url;
 
-  static Widget withDependency(String url,[WriteRecord? record]) => ChangeNotifierProvider<EditTextModel>(
-    create: (context) =>EditTextModel(Provider.of(context, listen: false), record, url),
-    child: EditTextPage(url),
+  static Widget withDependency([WriteRecord? record]) => ChangeNotifierProvider<EditTextModel>(
+    create: (context) =>EditTextModel(Provider.of(context, listen: false), record),
+    child: EditTextPage(),
   );
 
 

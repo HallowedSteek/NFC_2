@@ -54,8 +54,6 @@ class NdefWritePage extends StatelessWidget {
     child: NdefWritePage(),
   );
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,7 +98,7 @@ class NdefWritePage extends StatelessWidget {
                     case 'text':
                       Navigator.push(context, MaterialPageRoute(
                         fullscreenDialog: true,
-                        builder: (context) => EditTextPage.withDependency(""),
+                        builder: (context) => EditTextPage.withDependency(),
                       ));
                       break;
                     case 'uri':
@@ -259,7 +257,7 @@ class _WriteRecordFormRow extends StatelessWidget {
 
 final _editPageBuilders = Map<Type, Widget Function(WriteRecord)>.unmodifiable(
   <Type, Widget Function(WriteRecord)>{
-    WellknownTextRecord: (record) => EditTextPage.withDependency("",record),
+    WellknownTextRecord: (record) => EditTextPage.withDependency(record),
     WellknownUriRecord: (record) => EditUriPage.withDependency(record),
     MimeRecord: (record) => EditMimePage.withDependency(record),
     ExternalRecord: (record) => EditExternalPage.withDependency(record),
